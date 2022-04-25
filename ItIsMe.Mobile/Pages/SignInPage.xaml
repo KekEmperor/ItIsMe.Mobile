@@ -3,10 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ItIsMe.Mobile.SignInPage"
              Title="SignInPage">
-    <StackLayout>
-        <Label Text="Welcome to .NET MAUI!"
-                VerticalOptions="Center" 
-                HorizontalOptions="Center" />
+    
+    <StackLayout Spacing="25" Padding="30">
         <Button 
             Clicked="SignInButtonClicked"
             Text="Sign in"/>
