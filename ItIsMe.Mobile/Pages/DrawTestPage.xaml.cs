@@ -45,6 +45,10 @@ public partial class DrawTestPage : ContentPage
 			panGesture.PanUpdated += PanUpdated;
 			shapeToPlace.GestureRecognizers.Add(panGesture);
 
+			var pinchGesture = new PinchGestureRecognizer();
+			pinchGesture.PinchUpdated += PinchUpdated;
+			shapeToPlace.GestureRecognizers.Add(pinchGesture);
+
 			ShapesLayout.Children.Add(shapeToPlace);
 
 			ShapesLeftLabel.Text = $"Possible shapes left: {result.GetShapesLeft()}";
@@ -53,9 +57,16 @@ public partial class DrawTestPage : ContentPage
 
 	private void PanUpdated(object sender, PanUpdatedEventArgs e)
 	{
-		var image = (View)sender;
+		var image = (Image)sender;
 
 		image.TranslationX += e.TotalX;
 		image.TranslationY += e.TotalY;
 	}
+
+	private void PinchUpdated(object sender, PinchGestureUpdatedEventArgs e)
+    {
+		var image = (Image)sender;
+
+		image.Scale *= e.Scale;
+    }
 }
