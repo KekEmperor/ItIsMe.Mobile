@@ -5,6 +5,19 @@
              Title="SignInPage">
     
     <StackLayout Spacing="25" Padding="30">
+        <Frame
+            Padding="5">
+            <Entry
+                x:Name="EmailEntry"
+                Placeholder="Enter your e-mail"></Entry>
+        </Frame>
+        <Frame
+            Padding="5">
+            <Entry
+                x:Name="PasswordEntry"
+                Placeholder="Enter your password"
+                IsPassword="True"></Entry>
+        </Frame>
         <Button 
             Clicked="SignInButtonClicked"
             Text="Sign in"/>

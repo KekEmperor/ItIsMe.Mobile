@@ -4,7 +4,7 @@
              x:Class="ItIsMe.Mobile.DrawTestPage"
              Title="DrawTestPage">
     
-    <StackLayout Spacing="25">
+    <StackLayout Spacing="25" Padding="15">
         <HorizontalStackLayout 
             Spacing="15"
             HorizontalOptions="Center">
@@ -27,7 +27,7 @@
         <AbsoluteLayout 
             x:Name="ShapesLayout" 
             BackgroundColor="#EEEEEE"
-            HeightRequest="600"/>
+            HeightRequest="550"/>
         <Button
             Text="Complete the test"/>
     </StackLayout>

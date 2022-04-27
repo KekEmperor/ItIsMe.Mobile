@@ -9,6 +9,6 @@ public partial class SignInPage : ContentPage
 
     private void SignInButtonClicked(object sender, EventArgs e)
     {
-		Application.Current.MainPage = new MainPage();
+		Application.Current.MainPage = new NavigationPage(new MainPage());
     }
 }

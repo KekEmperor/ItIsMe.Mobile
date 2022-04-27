@@ -7,7 +7,7 @@ namespace ItIsMe.Mobile.Helpers
 {
     public static class RequestHelper
     {
-        private const string URL = "";
+        private const string URL = "http://myit-service-lb-23246224.eu-west-1.elb.amazonaws.com/api/";
 
         public static async Task<TResponse> Get<TResponse>(string requestUrl)
         {

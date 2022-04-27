@@ -6,6 +6,9 @@
     <VerticalStackLayout Spacing="25" Padding="30">
         <Button
             Text="Draw test"
-            Clicked="DrawTestButtonClicked"/>
+            Clicked="DrawTestButtonClicked" />
+        <Button
+            Text="Try the test out"
+            Clicked="TestButtonClicked" />
     </VerticalStackLayout>
 </ContentPage>

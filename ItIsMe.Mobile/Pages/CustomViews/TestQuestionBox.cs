@@ -4,10 +4,13 @@ namespace ItIsMe.Mobile;
 
 public class TestQuestionBox : ContentView
 {
-	private List<View> optionViewsList = new List<View>();
+	private readonly List<View> OptionViews = new List<View>();
+	private readonly string Type;
 
 	public TestQuestionBox(TestQuestion question)
 	{
+		Type = question.Type;
+
 		var content = new StackLayout
 		{
 			Children = {
@@ -17,12 +20,12 @@ public class TestQuestionBox : ContentView
 			Padding = 25
 		};
 
-		if (question.Options.Count == 0)
+		if (question.Type == "Open")
         {
 			var entry = new Entry();
 
             content.Add(entry);
-			optionViewsList.Add(entry);
+			OptionViews.Add(entry);
         }
 		else if (question.Type == "Radio")
         {
@@ -34,7 +37,7 @@ public class TestQuestionBox : ContentView
 				};
 
 				content.Add(radioButton);
-				optionViewsList.Add(radioButton);
+				OptionViews.Add(radioButton);
             }
         }
 		else
@@ -47,10 +50,41 @@ public class TestQuestionBox : ContentView
                 {
 					Children = { checkBox, new Label() { Text = option } }
                 });
-				optionViewsList.Add(checkBox);
+				OptionViews.Add(checkBox);
 			}
 		}
 
 		Content = content;
+    }
+
+	private bool IsQuestionHasAnswer()
+    {
+		if (Type == "Open")
+        {
+			if (((Entry)OptionViews.First()).Text.Length == 0)
+            {
+				Content.BackgroundColor = Color.FromRgb(245, 66, 66);
+				return false;
+			}
+			return true;
+        }
+		else if (Type == "Radio")
+        {
+			if (OptionViews.Cast<RadioButton>().All(rb => !rb.IsChecked))
+            {
+				Content.BackgroundColor = Color.FromRgb(245, 66, 66);
+				return false;
+			}
+			return true;
+        }
+        else
+        {
+			if (OptionViews.Cast<CheckBox>().All(cb => !cb.IsChecked))
+			{
+				Content.BackgroundColor = Color.FromRgb(245, 66, 66);
+				return false;
+			}
+			return true;
+		}
     }
 }
