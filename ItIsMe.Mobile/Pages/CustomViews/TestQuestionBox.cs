@@ -4,87 +4,108 @@ namespace ItIsMe.Mobile;
 
 public class TestQuestionBox : ContentView
 {
-	private readonly List<View> OptionViews = new List<View>();
-	private readonly string Type;
+    private readonly List<View> OptionViews = new List<View>();
+    private readonly string Type;
 
-	public TestQuestionBox(TestQuestion question)
-	{
-		Type = question.Type;
+    public TestQuestionBox(TestQuestion question)
+    {
+        Type = question.Type;
 
-		var content = new StackLayout
-		{
-			Children = {
-				new Label { Text = question.Question }
-			},
-			Spacing = 10,
-			Padding = 25
-		};
-
-		if (question.Type == "Open")
+        var content = new StackLayout
         {
-			var entry = new Entry();
+            Children = { new Label
+            {
+                Text = question.Question
+            } },
+            Spacing = 10,
+            Padding = 5
+        };
+
+        if (question.Type == "Open")
+        {
+            var entry = new Entry();
+
+            entry.Focused += OptionChanged;
 
             content.Add(entry);
-			OptionViews.Add(entry);
+            OptionViews.Add(entry);
         }
-		else if (question.Type == "Radio")
+        else if (question.Type == "Radio")
         {
-			foreach (var option in question.Options)
+            foreach (var option in question.Options)
             {
-				var radioButton = new RadioButton()
-				{
-					Content = option
-				};
-
-				content.Add(radioButton);
-				OptionViews.Add(radioButton);
-            }
-        }
-		else
-        {
-			foreach (var option in question.Options)
-			{
-				var checkBox = new CheckBox();
-
-				content.Add(new HorizontalStackLayout()
+                var radioButton = new RadioButton()
                 {
-					Children = { checkBox, new Label() { Text = option } }
-                });
-				OptionViews.Add(checkBox);
-			}
-		}
+                    Content = option
+                };
 
-		Content = content;
-    }
+                radioButton.CheckedChanged += OptionChanged;
 
-	private bool IsQuestionHasAnswer()
-    {
-		if (Type == "Open")
-        {
-			if (((Entry)OptionViews.First()).Text.Length == 0)
-            {
-				Content.BackgroundColor = Color.FromRgb(245, 66, 66);
-				return false;
-			}
-			return true;
-        }
-		else if (Type == "Radio")
-        {
-			if (OptionViews.Cast<RadioButton>().All(rb => !rb.IsChecked))
-            {
-				Content.BackgroundColor = Color.FromRgb(245, 66, 66);
-				return false;
-			}
-			return true;
+                content.Add(radioButton);
+                OptionViews.Add(radioButton);
+            }
         }
         else
         {
-			if (OptionViews.Cast<CheckBox>().All(cb => !cb.IsChecked))
-			{
-				Content.BackgroundColor = Color.FromRgb(245, 66, 66);
-				return false;
-			}
-			return true;
-		}
+            foreach (var option in question.Options)
+            {
+                var checkBox = new CheckBox();
+
+                checkBox.CheckedChanged += OptionChanged;
+
+                content.Add(new HorizontalStackLayout()
+                {
+                    Children = {
+                        checkBox,
+                        new Label()
+                        {
+                            Text = option,
+                            VerticalOptions = LayoutOptions.Center
+                        }
+                    },
+                    VerticalOptions = LayoutOptions.Center
+                });
+                OptionViews.Add(checkBox);
+            }
+        }
+
+        Content = content;
+    }
+
+    public bool DoesQuestionHaveAnswer()
+    {
+        if (Type == "Open")
+        {
+            if (string.IsNullOrEmpty(
+                ((Entry)OptionViews.First()).Text))
+            {
+                Content.BackgroundColor = Color.FromRgb(245, 66, 66);
+                return false;
+            }
+            return true;
+        }
+        else if (Type == "Radio")
+        {
+            if (OptionViews.Cast<RadioButton>().All(rb => !rb.IsChecked))
+            {
+                Content.BackgroundColor = Color.FromRgb(245, 66, 66);
+                return false;
+            }
+            return true;
+        }
+        else
+        {
+            if (OptionViews.Cast<CheckBox>().All(cb => !cb.IsChecked))
+            {
+                Content.BackgroundColor = Color.FromRgb(245, 66, 66);
+                return false;
+            }
+            return true;
+        }
+    }
+
+    private void OptionChanged(object sender, EventArgs e)
+    {
+        Content.BackgroundColor = Color.FromRgb(255, 255, 255);
     }
 }
