@@ -13,10 +13,12 @@ public class TestQuestionBox : ContentView
 
         var content = new StackLayout
         {
-            Children = { new Label
-            {
-                Text = question.Question
-            } },
+            Children = {
+                new Label
+                {
+                    Text = question.Question
+                }
+            },
             Spacing = 10,
             Padding = 5
         };
