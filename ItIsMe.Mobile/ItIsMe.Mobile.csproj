@@ -62,10 +62,10 @@
 	  <MauiXaml Update="Pages\CustomTestsMenuPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Pages\Views\CustomTestBox.xaml">
+	  <MauiXaml Update="Pages\DrawTestPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Pages\DrawTestPage.xaml">
+	  <MauiXaml Update="Pages\MoodTestPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\SignInPage.xaml">

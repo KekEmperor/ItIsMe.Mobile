@@ -15,14 +15,21 @@ public partial class MainPage : ContentPage
             new NavigationPage(new DrawTestPage()));
     }
 
-    private async void TestButtonClicked(object sender, EventArgs e)
+    private async void CustomTestsButtonClicked(object sender, EventArgs e)
     {
-        var testId = "DFDCBF6E-6D09-4A99-B752-B6F4C6A783B1";
+        var studentId = Preferences.Get("StudentId", "");
 
-        var test = await RequestHelper.Get<Test>($"tests/{testId}");
+        var assignedTests =
+            await RequestHelper.Get<IEnumerable<StudentAssignedTest>>($"assignedStudentTests?studentId={studentId}");
 
         await Navigation.PushAsync(
-            new NavigationPage(new CustomTestPage(test)));
+            new NavigationPage(new CustomTestsMenuPage(assignedTests)));
+    }
+
+    private async void MoodTestButtonClicked(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(
+            new NavigationPage(new MoodTestPage()));
     }
 }
 

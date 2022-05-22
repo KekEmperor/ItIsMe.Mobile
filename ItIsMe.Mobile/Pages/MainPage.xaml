@@ -8,7 +8,10 @@
             Text="Draw test"
             Clicked="DrawTestButtonClicked" />
         <Button
-            Text="Try the test out"
-            Clicked="TestButtonClicked" />
+            Text="Custom tests"
+            Clicked="CustomTestsButtonClicked" />
+        <Button 
+            Text="Mood test"
+            Clicked="MoodTestButtonClicked" />
     </VerticalStackLayout>
 </ContentPage>
