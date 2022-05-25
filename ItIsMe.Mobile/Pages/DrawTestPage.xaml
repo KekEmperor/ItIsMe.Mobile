@@ -29,6 +29,7 @@
             BackgroundColor="#EEEEEE"
             HeightRequest="550"/>
         <Button
-            Text="Complete the test"/>
+            Text="Complete the test"
+            Clicked="SubmitButtonClicked"/>
     </StackLayout>
 </ContentPage>

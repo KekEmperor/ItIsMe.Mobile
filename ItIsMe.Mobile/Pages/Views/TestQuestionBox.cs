@@ -106,6 +106,29 @@ public class TestQuestionBox : ContentView
         }
     }
 
+    public string GetResultForQuestion()
+    {
+        throw new NotImplementedException();
+    }
+
+    public string GetOptionForQuestion()
+    {
+        var radioButtonsList = OptionViews.Cast<RadioButton>();
+
+        if (radioButtonsList.ElementAt(0).IsChecked)
+        {
+            return "A";
+        }
+        else if (radioButtonsList.ElementAt(1).IsChecked)
+        {
+            return "B";
+        }
+        else
+        {
+            return "C";
+        }
+    }
+
     private void OptionChanged(object sender, EventArgs e)
     {
         Content.BackgroundColor = Color.FromRgb(255, 255, 255);

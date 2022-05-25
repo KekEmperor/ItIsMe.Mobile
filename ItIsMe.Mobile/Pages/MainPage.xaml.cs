@@ -4,15 +4,15 @@ using ItIsMe.Mobile.Helpers;
 namespace ItIsMe.Mobile;
 
 public partial class MainPage : ContentPage
-{public MainPage()
-	{
-		InitializeComponent();
-	}
+{
+    public MainPage()
+    {
+        InitializeComponent();
+    }
 
     private async void DrawTestButtonClicked(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(
-            new NavigationPage(new DrawTestPage()));
+        await Navigation.PushAsync(new DrawTestPage());
     }
 
     private async void CustomTestsButtonClicked(object sender, EventArgs e)

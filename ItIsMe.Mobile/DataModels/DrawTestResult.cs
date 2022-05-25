@@ -14,7 +14,7 @@ namespace ItIsMe.Mobile.DataModels
 
         public int TrianglesCounter { get; set; }
 
-        public bool CanAddShape() => CirclesCounter + SquaresCounter + TrianglesCounter <= 10;
+        public bool CanAddShape() => CirclesCounter + SquaresCounter + TrianglesCounter < 10;
 
         public int GetShapesLeft() => 10 - (CirclesCounter + SquaresCounter + TrianglesCounter);
     }

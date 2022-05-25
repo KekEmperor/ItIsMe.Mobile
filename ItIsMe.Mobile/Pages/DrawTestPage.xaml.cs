@@ -1,4 +1,5 @@
 using ItIsMe.Mobile.DataModels;
+using ItIsMe.Mobile.Helpers;
 
 namespace ItIsMe.Mobile;
 
@@ -68,5 +69,24 @@ public partial class DrawTestPage : ContentPage
 		var image = (Image)sender;
 
 		image.Scale *= e.Scale;
+    }
+
+    private async void SubmitButtonClicked(object sender, EventArgs e)
+    {
+		if (result.CanAddShape())
+        {
+			await DisplayAlert("Error", "You must use all 10 figures to complete the test!", "Got it");
+			return;
+        }
+
+		var resultModel = new DrawAPersonTestResults();
+
+		resultModel.Circle = result.CirclesCounter;
+		resultModel.Square = result.SquaresCounter;
+		resultModel.Triangle = result.TrianglesCounter;
+
+		DefaultTestsHelper.DrawAPersonTestResults = resultModel;
+
+		await Navigation.PopAsync();
     }
 }
