@@ -32,7 +32,7 @@ public class TestQuestionBox : ContentView
             content.Add(entry);
             OptionViews.Add(entry);
         }
-        else if (question.Type == "Radio")
+        else if (question.Type == "Radiobutton")
         {
             foreach (var option in question.Options)
             {
@@ -86,7 +86,7 @@ public class TestQuestionBox : ContentView
             }
             return true;
         }
-        else if (Type == "Radio")
+        else if (Type == "Radiobutton")
         {
             if (OptionViews.Cast<RadioButton>().All(rb => !rb.IsChecked))
             {
@@ -106,7 +106,7 @@ public class TestQuestionBox : ContentView
         }
     }
 
-    public string GetResultForQuestion()
+    public string GetAnswerForQuestion()
     {
         throw new NotImplementedException();
     }

@@ -1,5 +1,6 @@
 using ItIsMe.Mobile.DataModels;
 using ItIsMe.Mobile.Helpers;
+using ItIsMe.Mobile.RequestModels.AssignStudentTest;
 using Newtonsoft.Json;
 
 namespace ItIsMe.Mobile;
@@ -56,7 +57,7 @@ public partial class CustomTestPage : ContentPage
 
         if (Test.Name == "IT speciality test")
         {
-            var result = new ItSpecialityTestAnswers();
+            var result = new ItSpecialityTestRequest();
 
             foreach (var qb in QuestionBoxesList)
             {

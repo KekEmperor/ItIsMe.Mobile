@@ -1,5 +1,6 @@
 using ItIsMe.Mobile.DataModels;
 using ItIsMe.Mobile.Helpers;
+using ItIsMe.Mobile.RequestModels.AssignStudentTest;
 
 namespace ItIsMe.Mobile;
 
@@ -79,7 +80,7 @@ public partial class DrawTestPage : ContentPage
 			return;
         }
 
-		var resultModel = new DrawAPersonTestResults();
+		var resultModel = new DrawAPersonTestRequest();
 
 		resultModel.Circle = result.CirclesCounter;
 		resultModel.Square = result.SquaresCounter;

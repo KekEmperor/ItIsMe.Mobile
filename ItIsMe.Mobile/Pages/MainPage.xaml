@@ -13,5 +13,11 @@
         <Button 
             Text="Mood test"
             Clicked="MoodTestButtonClicked" />
+        <Button
+            Text="Profession tests"
+            Clicked="ProfessionTestsButtonClicked" />
+        <Button
+            Text="IT speciality test"
+            Clicked="ItSpecialityTestButtonClicked" />
     </VerticalStackLayout>
 </ContentPage>

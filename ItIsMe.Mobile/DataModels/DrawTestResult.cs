@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ItIsMe.Mobile.DataModels
+﻿namespace ItIsMe.Mobile.DataModels
 {
     public class DrawTestResult
     {
