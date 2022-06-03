@@ -74,8 +74,6 @@ namespace ItIsMe.Mobile.Helpers
                 httpResponse = client.PostAsync(URL + requestUrl, data).Result;
             }
 
-            var penis = httpResponse.Content.ReadAsStringAsync().Result;
-
             return httpResponse.StatusCode;
         }
     }

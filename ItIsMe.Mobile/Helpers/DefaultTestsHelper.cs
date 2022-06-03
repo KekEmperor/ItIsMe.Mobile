@@ -1,9 +1,5 @@
-﻿using ItIsMe.Mobile.RequestModels.AssignStudentTest;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ItIsMe.Mobile.DataModels;
+using ItIsMe.Mobile.RequestModels.AssignStudentTest;
 
 namespace ItIsMe.Mobile.Helpers
 {
@@ -19,15 +15,10 @@ namespace ItIsMe.Mobile.Helpers
         public static bool AreTestsCompleted =>
             DrawAPersonTestResults != null && ItSpecialityTestAnswers != null;
 
-        public static void SendResults()
+        public static bool SendResults()
         {
-            ItSpecialityTestAnswers = new ItSpecialityTestRequest { A = 10, B = 12, C = 0 };
-            DrawAPersonTestResults = new DrawAPersonTestRequest { Circle = 8, Square = 0, Triangle = 2 };
-
-            if (!AreTestsCompleted)
-            {
-                return;
-            }
+            ItSpecialityTestAnswers = new ItSpecialityTestRequest { A = 3, B = 5, C = 14 };
+            DrawAPersonTestResults = new DrawAPersonTestRequest { Circle = 4, Triangle = 3, Square = 3 };
 
             var drawPersonTestId = RequestHelper.Post<AssignStudentTestResponse>(
                 $"assignedStudentTests?studentId={Preferences.Get("StudentId", "")}&testId={DRAW_TEST_ID}");
@@ -40,6 +31,9 @@ namespace ItIsMe.Mobile.Helpers
 
             var itSpecialitySubmitResult = RequestHelper.PostTest(
                     ItSpecialityTestAnswers, $"assignedStudentTests/{itSpecialityTestId.StudentAssignedTestId}");
+
+            return drawPersonSubmitResult == System.Net.HttpStatusCode.OK
+                && itSpecialitySubmitResult == System.Net.HttpStatusCode.OK;
         }
     }
 }
