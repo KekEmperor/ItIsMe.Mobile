@@ -5,19 +5,10 @@
 
     <VerticalStackLayout Spacing="25" Padding="30">
         <Button
-            Text="Draw test"
-            Clicked="DrawTestButtonClicked" />
-        <Button
             Text="Custom tests"
             Clicked="CustomTestsButtonClicked" />
-        <Button 
-            Text="Mood test"
-            Clicked="MoodTestButtonClicked" />
         <Button
             Text="Profession tests"
             Clicked="ProfessionTestsButtonClicked" />
-        <Button
-            Text="IT speciality test"
-            Clicked="ItSpecialityTestButtonClicked" />
     </VerticalStackLayout>
 </ContentPage>

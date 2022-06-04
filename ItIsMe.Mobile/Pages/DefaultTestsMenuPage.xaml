@@ -4,8 +4,18 @@
              x:Class="ItIsMe.Mobile.DefaultTestsMenuPage"
              Title="DefaultTestsMenuPage">
     <VerticalStackLayout Spacing="25" Padding="30">
+        <Button 
+            Text="Mood test"
+            Clicked="MoodTestButtonClicked" />
+        <Button
+            Text="Draw test"
+            Clicked="DrawTestButtonClicked" />
+        <Button
+            Text="IT speciality test"
+            Clicked="ItSpecialityTestButtonClicked" />
         <Button
             Text="Submit profession tests"
+            x:Name="SubmitButton"
             Clicked="SubmitTestsButtonClicked"/>
     </VerticalStackLayout>
 </ContentPage>

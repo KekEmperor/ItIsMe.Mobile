@@ -9,11 +9,23 @@ public partial class CustomTestsMenuPage : ContentPage
 		var layout = new VerticalStackLayout();
 
 		var filteredTests = assignedTests.Where(t => t.Test.Name != "Draw a person"
-												  && t.Test.Name != "IT speciality test");
+												  && t.Test.Name != "IT speciality test"
+                                                  && !t.IsCompleted);
 
-		foreach (var assignedTest in filteredTests)
+		if (filteredTests.Any())
         {
-			layout.Children.Add(new CustomTestBox(assignedTest));
+            foreach (var assignedTest in filteredTests)
+            {
+                layout.Children.Add(new CustomTestBox(assignedTest));
+            }
+        }
+		else
+        {
+            layout.Children.Add(new Label
+            {
+                Text = "No tests assigned for you yet!",
+                HorizontalOptions = LayoutOptions.Center
+            });
         }
 
 		Content = layout;

@@ -17,9 +17,6 @@ namespace ItIsMe.Mobile.Helpers
 
         public static bool SendResults()
         {
-            ItSpecialityTestAnswers = new ItSpecialityTestRequest { A = 3, B = 5, C = 14 };
-            DrawAPersonTestResults = new DrawAPersonTestRequest { Circle = 4, Triangle = 3, Square = 3 };
-
             var drawPersonTestId = RequestHelper.Post<AssignStudentTestResponse>(
                 $"assignedStudentTests?studentId={Preferences.Get("StudentId", "")}&testId={DRAW_TEST_ID}");
 
