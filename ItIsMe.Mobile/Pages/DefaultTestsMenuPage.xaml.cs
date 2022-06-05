@@ -1,15 +1,16 @@
 using ItIsMe.Mobile.DataModels;
 using ItIsMe.Mobile.Helpers;
+using ItIsMe.Mobile.Pages.Interfaces;
 
 namespace ItIsMe.Mobile;
 
-public partial class DefaultTestsMenuPage : ContentPage
+public partial class DefaultTestsMenuPage : ContentPage, IRefreshablePage
 {
     public DefaultTestsMenuPage()
     {
         InitializeComponent();
 
-        RefreshSubmitButton();
+        Refresh();
     }
 
     private async void MoodTestButtonClicked(object sender, EventArgs e)
@@ -20,14 +21,14 @@ public partial class DefaultTestsMenuPage : ContentPage
 
     private async void DrawTestButtonClicked(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new DrawTestPage());
+        await Navigation.PushAsync(new DrawTestPage(this));
     }
 
     private async void ItSpecialityTestButtonClicked(object sender, EventArgs e)
     {
         var test = await RequestHelper.Get<Test>($"tests/{DefaultTestsHelper.IT_TEST_ID}");
 
-        await Navigation.PushAsync(new CustomTestPage(test));
+        await Navigation.PushAsync(new CustomTestPage(test, this));
     }
 
     private async void SubmitTestsButtonClicked(object sender, EventArgs e)
@@ -42,12 +43,8 @@ public partial class DefaultTestsMenuPage : ContentPage
         }
     }
 
-    public void RefreshSubmitButton()
+    public void Refresh()
     {
-        if (!DefaultTestsHelper.AreTestsCompleted)
-        {
-            SubmitButton.IsEnabled = false;
-        }
-        SubmitButton.IsEnabled = true;
+        SubmitButton.IsEnabled = DefaultTestsHelper.AreTestsCompleted;
     }
 }

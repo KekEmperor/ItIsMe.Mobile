@@ -1,5 +1,6 @@
 using ItIsMe.Mobile.DataModels;
 using ItIsMe.Mobile.Helpers;
+using ItIsMe.Mobile.Pages.Interfaces;
 using ItIsMe.Mobile.RequestModels.AssignStudentTest;
 using Newtonsoft.Json;
 
@@ -7,12 +8,16 @@ namespace ItIsMe.Mobile;
 
 public partial class CustomTestPage : ContentPage
 {
+    private readonly IRefreshablePage _parentPage;
+
     private readonly List<TestQuestionBox> QuestionBoxesList = new List<TestQuestionBox>();
     private readonly Test Test;
 
-    public CustomTestPage(Test test)
+    public CustomTestPage(Test test, IRefreshablePage parentPage = null)
     {
         InitializeComponent();
+
+        _parentPage = parentPage;
 
         Test = test;
 
@@ -76,6 +81,11 @@ public partial class CustomTestPage : ContentPage
             }
 
             DefaultTestsHelper.ItSpecialityTestAnswers = result;
+        }
+
+        if (_parentPage != null)
+        {
+            _parentPage.Refresh();
         }
 
         await Navigation.PopAsync();

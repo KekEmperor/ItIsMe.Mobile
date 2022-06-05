@@ -5,6 +5,9 @@
 
     <VerticalStackLayout Spacing="25" Padding="30">
         <Button
+            Text="Personal cabinet"
+            Clicked="PersonalCabinetButtonClicked" />
+        <Button
             Text="Custom tests"
             Clicked="CustomTestsButtonClicked" />
         <Button

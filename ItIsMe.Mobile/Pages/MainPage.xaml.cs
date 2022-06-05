@@ -12,17 +12,25 @@ public partial class MainPage : ContentPage
 
     private async void CustomTestsButtonClicked(object sender, EventArgs e)
     {
-        var studentId = Preferences.Get("StudentId", "");
-
-        var assignedTests =
-            await RequestHelper.Get<IEnumerable<StudentAssignedTest>>($"assignedStudentTests?studentId={studentId}");
-
-        await Navigation.PushAsync(new CustomTestsMenuPage(assignedTests));
+        await Navigation.PushAsync(new CustomTestsMenuPage());
     }
 
     private async void ProfessionTestsButtonClicked(object sender, EventArgs e)
     {
         await Navigation.PushAsync(new DefaultTestsMenuPage());
+    }
+
+    private async void PersonalCabinetButtonClicked(object sender, EventArgs e)
+    {
+        var studentId = Preferences.Get("StudentId", "");
+
+        var student = await RequestHelper.Get<Student>($"students/{studentId}");
+
+        var professionTestsResult =
+            await RequestHelper.Get<ProfessionTestsResult>(
+                $"assignedStudentTests/getLastProfessionTestsResult?studentId={studentId}");
+
+        await Navigation.PushAsync(new PersonalCabinetPage(student, professionTestsResult));
     }
 }
 

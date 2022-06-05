@@ -1,13 +1,18 @@
 using ItIsMe.Mobile.DataModels;
+using ItIsMe.Mobile.Pages.Interfaces;
 
 namespace ItIsMe.Mobile;
 
 public class CustomTestBox : ContentView
 {
+    private readonly IRefreshablePage _parentPage;
+
     private readonly StudentAssignedTest _assignedTest;
 
-    public CustomTestBox(StudentAssignedTest assignedTest)
+    public CustomTestBox(StudentAssignedTest assignedTest, IRefreshablePage parentPage)
     {
+        _parentPage = _parentPage;
+
         _assignedTest = assignedTest;
 
         var layout = new Frame
@@ -36,6 +41,6 @@ public class CustomTestBox : ContentView
 
     private async void BoxTapped(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new CustomTestPage(_assignedTest.Test));
+        await Navigation.PushAsync(new CustomTestPage(_assignedTest.Test, _parentPage));
     }
 }

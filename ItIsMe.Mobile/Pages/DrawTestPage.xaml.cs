@@ -1,16 +1,21 @@
 using ItIsMe.Mobile.DataModels;
 using ItIsMe.Mobile.Helpers;
+using ItIsMe.Mobile.Pages.Interfaces;
 using ItIsMe.Mobile.RequestModels.AssignStudentTest;
 
 namespace ItIsMe.Mobile;
 
 public partial class DrawTestPage : ContentPage
 {
-	private DrawTestResult result;
+	private IRefreshablePage _parentPage;
 
-	public DrawTestPage()
+    private DrawTestResult result;
+
+	public DrawTestPage(IRefreshablePage parentPage)
 	{
 		InitializeComponent();
+
+		_parentPage = parentPage;
 
 		result = new DrawTestResult();
 
@@ -87,6 +92,8 @@ public partial class DrawTestPage : ContentPage
 		resultModel.Triangle = result.TrianglesCounter;
 
 		DefaultTestsHelper.DrawAPersonTestResults = resultModel;
+
+		_parentPage.Refresh();
 
 		await Navigation.PopAsync();
     }

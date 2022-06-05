@@ -1,25 +1,41 @@
 using ItIsMe.Mobile.DataModels;
+using ItIsMe.Mobile.Helpers;
+using ItIsMe.Mobile.Pages.Interfaces;
 
 namespace ItIsMe.Mobile;
 
-public partial class CustomTestsMenuPage : ContentPage
+public partial class CustomTestsMenuPage : ContentPage, IRefreshablePage
 {
-	public CustomTestsMenuPage(IEnumerable<StudentAssignedTest> assignedTests)
-	{
-		var layout = new VerticalStackLayout();
+    public CustomTestsMenuPage()
+    {
+        Refresh();
+    }
 
-		var filteredTests = assignedTests.Where(t => t.Test.Name != "Draw a person"
-												  && t.Test.Name != "IT speciality test"
+    public async void Refresh()
+    {
+        var studentId = Preferences.Get("StudentId", "");
+
+        var assignedTests =
+            await RequestHelper.Get<IEnumerable<StudentAssignedTest>>($"assignedStudentTests?studentId={studentId}");
+
+        var layout = new VerticalStackLayout
+        {
+            Spacing = 10,
+            Padding = 10
+        };
+
+        var filteredTests = assignedTests.Where(t => t.Test.Name != "Draw a person"
+                                                  && t.Test.Name != "IT speciality test"
                                                   && !t.IsCompleted);
 
-		if (filteredTests.Any())
+        if (filteredTests.Any())
         {
             foreach (var assignedTest in filteredTests)
             {
-                layout.Children.Add(new CustomTestBox(assignedTest));
+                layout.Children.Add(new CustomTestBox(assignedTest, this));
             }
         }
-		else
+        else
         {
             layout.Children.Add(new Label
             {
@@ -28,6 +44,6 @@ public partial class CustomTestsMenuPage : ContentPage
             });
         }
 
-		Content = layout;
-	}
+        Content = layout;
+    }
 }
