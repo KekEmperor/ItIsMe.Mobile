@@ -32,5 +32,10 @@ public partial class MainPage : ContentPage
 
         await Navigation.PushAsync(new PersonalCabinetPage(student, professionTestsResult));
     }
+
+    private async void SessionsButtonClicked(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new SessionsPage());
+    }
 }
 

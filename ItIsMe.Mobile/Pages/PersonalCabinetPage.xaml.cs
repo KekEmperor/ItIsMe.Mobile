@@ -5,59 +5,77 @@ namespace ItIsMe.Mobile;
 
 public partial class PersonalCabinetPage : ContentPage
 {
-	public PersonalCabinetPage(Student student, ProfessionTestsResult testsResult)
-	{
-		InitializeComponent();
+    public PersonalCabinetPage(Student student, ProfessionTestsResult testsResult)
+    {
+        InitializeComponent();
 
-		var groupFullCode = string.Join('-',
-			student.Group.EducationalProgram.Code,
-			student.Group.Year % 1000,
-			student.Group.Number);
+        var groupFullCode = string.Join('-',
+            student.Group.EducationalProgram.Code,
+            student.Group.Year % 1000,
+            student.Group.Number);
 
-		var layout = new StackLayout
-		{
-			Children =
-			{
-				new Label
-				{
-					Text = $"{student.FullName}",
-					FontSize = 25
-				},
-				new Label
+        var layout = new StackLayout
+        {
+            Children =
+            {
+                new Label
                 {
-					Text = $"Academic group: {groupFullCode}",
-					FontSize = 15
+                    Text = $"{student.FullName}",
+                    FontSize = 25
                 },
-				new Label
+                new Label
                 {
-					Text = $"Date of birth: {student.DOB.ToString("d")}",
-					FontSize = 15
+                    Text = $"Academic group: {groupFullCode}",
+                    FontSize = 15
                 },
-				new Label
+                new Label
                 {
-					Text = $"Profession tests taken: {testsResult.AttemptsCount}",
-					FontSize = 20,
-					Padding = new Thickness(0, 30, 0, 0)
+                    Text = $"Date of birth: {student.DOB.ToString("d")}",
+                    FontSize = 15
                 },
-				testsResult.AttemptsCount == 0 
-				?
-					new Label
+                new Label
+                {
+                    Text = $"Profession tests taken: {testsResult.AttemptsCount}",
+                    FontSize = 20,
+                    Padding = new Thickness(0, 30, 0, 0)
+                },
+                testsResult.AttemptsCount == 0
+                ?
+                    new Label
                     {
-						Text = "You have not passed any profession tests yet. Please try to pass one and come back here for the result!",
-						FontSize = 20
+                        Text = "You have not passed any profession tests yet. Please try to pass one and come back here for the result!",
+                        FontSize = 20
                     }
-				:
-					new Label
+                :
+                    new Label
                     {
-						Text = $"Your last attempt of \"Draw a person\" test showed that your emotional type is {testsResult.EmotionType}. Based on this, final test result for your profession was a position of {testsResult.Profession}",
-						FontSize = 20
-					}
-					
-			},
-			Padding = 10,
-			Spacing = 15
-		};
+                        Text = $"Your last attempt of \"Draw a person\" test showed that your emotional type is {testsResult.EmotionType}. Based on this, final test result for your profession was a position of {testsResult.Profession}",
+                        FontSize = 20
+                    },
 
-		Content = layout;
-	}
+            },
+            Padding = 10,
+            Spacing = 15
+        };
+
+        var commentsButton = new Button
+        {
+            Text = "Review comments",
+            Margin = new Thickness(0, 50, 0, 0)
+        };
+
+        commentsButton.Clicked += ReviewCommentsButtonClicked;
+
+        layout.Children.Add(commentsButton);
+
+        Content = layout;
+    }
+
+    private async void ReviewCommentsButtonClicked(object sender, EventArgs e)
+    {
+        var comments = await RequestHelper.Get<IEnumerable<SessionComment>>(
+            $"sessionComments/getSessionCommentsForStudent?studentId={Preferences.Get("StudentId", "")}");
+
+        await Navigation.PushAsync(new CommentsPage(comments));
+    }
 }

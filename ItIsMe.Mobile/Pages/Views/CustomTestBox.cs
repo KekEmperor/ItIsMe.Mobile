@@ -11,7 +11,7 @@ public class CustomTestBox : ContentView
 
     public CustomTestBox(StudentAssignedTest assignedTest, IRefreshablePage parentPage)
     {
-        _parentPage = _parentPage;
+        _parentPage = parentPage;
 
         _assignedTest = assignedTest;
 

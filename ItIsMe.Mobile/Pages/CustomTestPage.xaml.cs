@@ -10,16 +10,18 @@ public partial class CustomTestPage : ContentPage
 {
     private readonly IRefreshablePage _parentPage;
 
-    private readonly List<TestQuestionBox> QuestionBoxesList = new List<TestQuestionBox>();
-    private readonly Test Test;
+    private readonly List<TestQuestionBox> _questionBoxesList = new List<TestQuestionBox>();
+    private readonly Test _test;
 
     public CustomTestPage(Test test, IRefreshablePage parentPage = null)
     {
         InitializeComponent();
 
+        Title = test.Name;
+
         _parentPage = parentPage;
 
-        Test = test;
+        _test = test;
 
         ScrollView parentScrollView = new ScrollView();
 
@@ -38,7 +40,7 @@ public partial class CustomTestPage : ContentPage
             var questionBox = new TestQuestionBox(question);
 
             questionsHolder.Children.Add(questionBox);
-            QuestionBoxesList.Add(questionBox);
+            _questionBoxesList.Add(questionBox);
         }
 
         Button submitButton = new Button()
@@ -54,17 +56,17 @@ public partial class CustomTestPage : ContentPage
 
     private async void SubmitButtonClicked(object sender, EventArgs e)
     {
-        if (!QuestionBoxesList.All(qb => qb.DoesQuestionHaveAnswer()))
+        if (!_questionBoxesList.All(qb => qb.DoesQuestionHaveAnswer()))
         {
             await DisplayAlert("Error", "Answer all the questions of the test please", "Got it");
             return;
         }
 
-        if (Test.Name == "IT speciality test")
+        if (_test.Name == "IT speciality test")
         {
             var result = new ItSpecialityTestRequest();
 
-            foreach (var qb in QuestionBoxesList)
+            foreach (var qb in _questionBoxesList)
             {
                 switch (qb.GetOptionForQuestion())
                 {

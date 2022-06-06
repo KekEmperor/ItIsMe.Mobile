@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -75,6 +76,22 @@ namespace ItIsMe.Mobile.Helpers
             }
 
             return httpResponse.StatusCode;
+        }
+
+        public static async Task<HttpStatusCode> PostImage(FileResult fileResult, string testId)
+        {
+            using Stream sourceStream = await fileResult.OpenReadAsync();
+            using HttpClient httpClient = new HttpClient();
+
+            MultipartFormDataContent form = new MultipartFormDataContent();
+
+            var image = new StreamContent(sourceStream);
+
+            form.Add(image, "file", fileResult.FileName);
+
+            var response = await httpClient.PostAsync(URL + $"assignedStudentTests/upload?assignedStudentTestId={testId}", form);
+
+            return response.StatusCode;
         }
     }
 }

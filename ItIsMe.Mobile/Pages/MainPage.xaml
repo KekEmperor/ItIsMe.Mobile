@@ -13,5 +13,8 @@
         <Button
             Text="Profession tests"
             Clicked="ProfessionTestsButtonClicked" />
+        <Button
+            Text="Sessions"
+            Clicked="SessionsButtonClicked" />
     </VerticalStackLayout>
 </ContentPage>

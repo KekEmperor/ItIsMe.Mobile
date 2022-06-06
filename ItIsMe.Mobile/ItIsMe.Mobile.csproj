@@ -46,16 +46,29 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\credentials.json" />
 	  <None Remove="Resources\Images\circle.svg" />
 	  <None Remove="Resources\Images\square.svg" />
 	  <None Remove="Resources\Images\triangle.svg" />
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Resource Include="Resources\credentials.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Resource>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Google.Apis" Version="1.57.0" />
+	  <PackageReference Include="Google.Apis.Auth" Version="1.57.0" />
+	  <PackageReference Include="Google.Apis.Calendar.v3" Version="1.57.0.2696" />
 	  <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Pages\CommentsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\CustomTestPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -72,6 +85,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\PersonalCabinetPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\SessionsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\SignInPage.xaml">
