@@ -7,12 +7,23 @@
         <Button 
             Text="Mood test"
             Clicked="MoodTestButtonClicked" />
+        <Label
+            Text="Please pass the mood test to answer the other tests." 
+            x:Name="MoodLabel" />
+        <Label
+            Text="Unfortunately, we cannot allow passing the next tests with such a mood."
+            x:Name="BadMoodLabel" />
         <Button
             Text="Draw test"
+            x:Name="DrawTestButton"
             Clicked="DrawTestButtonClicked" />
         <Button
             Text="IT speciality test"
+            x:Name="ItTestButton"
             Clicked="ItSpecialityTestButtonClicked" />
+        <Label
+            Text="Please complete both tests above to submit them and see your result!"
+            x:Name="FinalLabel"/>
         <Button
             Text="Submit profession tests"
             x:Name="SubmitButton"

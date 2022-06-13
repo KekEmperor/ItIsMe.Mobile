@@ -4,12 +4,12 @@ namespace ItIsMe.Mobile;
 
 public class TestQuestionBox : ContentView
 {
-    private readonly List<View> OptionViews = new List<View>();
-    private readonly string Type;
+    private readonly List<View> _optionViews = new List<View>();
+    private readonly string _type;
 
     public TestQuestionBox(TestQuestion question)
     {
-        Type = question.Type;
+        _type = question.Type;
 
         var content = new StackLayout
         {
@@ -30,7 +30,7 @@ public class TestQuestionBox : ContentView
             entry.Focused += OptionChanged;
 
             content.Add(entry);
-            OptionViews.Add(entry);
+            _optionViews.Add(entry);
         }
         else if (question.Type == "Radiobutton")
         {
@@ -44,7 +44,7 @@ public class TestQuestionBox : ContentView
                 radioButton.CheckedChanged += OptionChanged;
 
                 content.Add(radioButton);
-                OptionViews.Add(radioButton);
+                _optionViews.Add(radioButton);
             }
         }
         else
@@ -67,7 +67,7 @@ public class TestQuestionBox : ContentView
                     },
                     VerticalOptions = LayoutOptions.Center
                 });
-                OptionViews.Add(checkBox);
+                _optionViews.Add(checkBox);
             }
         }
 
@@ -76,19 +76,19 @@ public class TestQuestionBox : ContentView
 
     public bool DoesQuestionHaveAnswer()
     {
-        if (Type == "Open")
+        if (_type == "Open")
         {
             if (string.IsNullOrEmpty(
-                ((Entry)OptionViews.First()).Text))
+                ((Entry)_optionViews.First()).Text))
             {
                 Content.BackgroundColor = Color.FromRgb(245, 66, 66);
                 return false;
             }
             return true;
         }
-        else if (Type == "Radiobutton")
+        else if (_type == "Radiobutton")
         {
-            if (OptionViews.Cast<RadioButton>().All(rb => !rb.IsChecked))
+            if (_optionViews.Cast<RadioButton>().All(rb => !rb.IsChecked))
             {
                 Content.BackgroundColor = Color.FromRgb(245, 66, 66);
                 return false;
@@ -97,7 +97,7 @@ public class TestQuestionBox : ContentView
         }
         else
         {
-            if (OptionViews.Cast<CheckBox>().All(cb => !cb.IsChecked))
+            if (_optionViews.Cast<CheckBox>().All(cb => !cb.IsChecked))
             {
                 Content.BackgroundColor = Color.FromRgb(245, 66, 66);
                 return false;
@@ -113,7 +113,7 @@ public class TestQuestionBox : ContentView
 
     public string GetOptionForQuestion()
     {
-        var radioButtonsList = OptionViews.Cast<RadioButton>();
+        var radioButtonsList = _optionViews.Cast<RadioButton>();
 
         if (radioButtonsList.ElementAt(0).IsChecked)
         {

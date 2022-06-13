@@ -58,6 +58,16 @@ public partial class PersonalCabinetPage : ContentPage
             Spacing = 15
         };
 
+        var telegramButton = new Button
+        {
+            Text = "Open Telegram Bot",
+            Margin = new Thickness(0, 10, 0, 0)
+        };
+
+        telegramButton.Clicked += OpenBotButtonClicked;
+
+        layout.Children.Add(telegramButton);
+
         var commentsButton = new Button
         {
             Text = "Review comments",
@@ -77,5 +87,11 @@ public partial class PersonalCabinetPage : ContentPage
             $"sessionComments/getSessionCommentsForStudent?studentId={Preferences.Get("StudentId", "")}");
 
         await Navigation.PushAsync(new CommentsPage(comments));
+    }
+
+    private async void OpenBotButtonClicked(object sender, EventArgs e)
+    {
+        Uri uri = new Uri("https://t.me/eva_project_bot");
+        await Browser.Default.OpenAsync(uri, BrowserLaunchMode.External);
     }
 }

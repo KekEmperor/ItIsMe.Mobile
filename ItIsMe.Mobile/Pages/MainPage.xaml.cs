@@ -35,7 +35,12 @@ public partial class MainPage : ContentPage
 
     private async void SessionsButtonClicked(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new SessionsPage());
+        var studentId = Preferences.Get("StudentId", "");
+
+        var sessions = await RequestHelper.Get<IEnumerable<Session>>(
+            $"sessions/getSessionsForStudent?studentId={studentId}");
+
+        await Navigation.PushAsync(new SessionsPage(sessions));
     }
 }
 

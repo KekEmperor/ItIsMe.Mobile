@@ -14,7 +14,7 @@
             Text="Profession tests"
             Clicked="ProfessionTestsButtonClicked" />
         <Button
-            Text="Sessions"
+            Text="Sessions list"
             Clicked="SessionsButtonClicked" />
     </VerticalStackLayout>
 </ContentPage>

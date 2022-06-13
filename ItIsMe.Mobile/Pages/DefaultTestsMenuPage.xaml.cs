@@ -16,7 +16,7 @@ public partial class DefaultTestsMenuPage : ContentPage, IRefreshablePage
     private async void MoodTestButtonClicked(object sender, EventArgs e)
     {
         await Navigation.PushAsync(
-            new NavigationPage(new MoodTestPage()));
+            new NavigationPage(new MoodTestPage(this)));
     }
 
     private async void DrawTestButtonClicked(object sender, EventArgs e)
@@ -41,10 +41,20 @@ public partial class DefaultTestsMenuPage : ContentPage, IRefreshablePage
         {
             await DisplayAlert("Error", "Something went wrong. Please try sending again later.", "Got it");
         }
+
+        Refresh();
     }
 
     public void Refresh()
     {
+        MoodLabel.IsVisible = !DefaultTestsHelper.IsMoodGotten;
+        BadMoodLabel.IsVisible = DefaultTestsHelper.IsMoodGotten && !DefaultTestsHelper.IsMoodAllowed;
+
+        ItTestButton.IsEnabled = DefaultTestsHelper.IsMoodAllowed;
+        DrawTestButton.IsEnabled = DefaultTestsHelper.IsMoodAllowed;
+
+        FinalLabel.IsVisible = DefaultTestsHelper.IsMoodAllowed && !DefaultTestsHelper.AreTestsCompleted;
+        
         SubmitButton.IsEnabled = DefaultTestsHelper.AreTestsCompleted;
     }
 }
