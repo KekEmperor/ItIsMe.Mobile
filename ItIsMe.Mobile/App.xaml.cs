@@ -8,6 +8,6 @@ public partial class App : Application
 
 		MainPage = new SignInPage();
 
-        Preferences.Set("StudentId", "1D09EE93-1B92-463B-A8B9-077C50248021");
+        Preferences.Set("StudentId", "923FB40B-89A2-4489-BDA0-0BB6B19B465C");
 	}
 }

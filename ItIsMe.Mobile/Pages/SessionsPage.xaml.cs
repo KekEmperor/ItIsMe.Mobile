@@ -14,6 +14,19 @@ public partial class SessionsPage : ContentPage
             Padding = 10
         };
 
+        var button = new Button
+        {
+            Text = "Add session to the calendar"
+        };
+
+        button.Clicked += async (sender, e) =>
+        {
+            Uri uri = new Uri("https://calendar.google.com/calendar/u/1/r/eventedit?vcon=meet&dates=now");
+            await Browser.Default.OpenAsync(uri, BrowserLaunchMode.External);
+        };
+
+        layout.Children.Add(button);
+
         if (sessions.Count() == 0 || sessions == null)
         {
             layout.Children.Add(new Label
@@ -54,6 +67,9 @@ public partial class SessionsPage : ContentPage
             }
         }
 
-        Content = layout;
+        Content = new ScrollView
+        {
+            Content = layout
+        };
     }
 }

@@ -4,6 +4,8 @@
     {
         public string Comment { get; set; }
 
-        public Session Session { get; set; }
+        public string Psychologist { get; set; }
+
+        public DateTime Time { get; set; }
     }
 }

@@ -33,7 +33,7 @@ public partial class CommentsPage : ContentPage
                         Children = 
                         {
                             new Label {
-                                Text = $"{comment.Session.Psychologist.FullName}, {comment.Session.Date.ToString("d")}",
+                                Text = $"{comment.Psychologist}, {comment.Time.ToString("d")}",
                                 FontSize = 15
                             },
                             new Label
