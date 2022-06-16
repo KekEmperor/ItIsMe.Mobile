@@ -3,6 +3,7 @@ using ItIsMe.Mobile.Helpers;
 using ItIsMe.Mobile.Pages.Interfaces;
 using ItIsMe.Mobile.RequestModels.AssignStudentTest;
 using Newtonsoft.Json;
+using System.Net;
 using System.Text;
 
 namespace ItIsMe.Mobile;
@@ -68,6 +69,8 @@ public partial class CustomTestPage : ContentPage
 
         var answers = new List<Answer>();
 
+        HttpStatusCode response = HttpStatusCode.OK;
+
         if (_test.Name == "IT speciality test")
         {
             var result = new ItSpecialityTestRequest();
@@ -96,11 +99,14 @@ public partial class CustomTestPage : ContentPage
             {
                 answers.Add(tb.GetAnswerForQuestion());
             }
+
+            ResultContent testAnswers = new ResultContent
+            {
+                Result = JsonConvert.SerializeObject(answers)
+            };
+
+            response = await RequestHelper.PostCustomTestResult(JsonConvert.SerializeObject(testAnswers), _assignedTestId);
         }
-
-        string testAnswers = JsonConvert.SerializeObject(answers);
-
-        var response = await RequestHelper.PostCustomTestResult(testAnswers, _assignedTestId);
 
         if (response == System.Net.HttpStatusCode.OK)
         {

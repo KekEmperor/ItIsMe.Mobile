@@ -1,4 +1,5 @@
-﻿using ItIsMe.Mobile.RequestModels.AssignStudentTest;
+﻿using ItIsMe.Mobile.DataModels;
+using ItIsMe.Mobile.RequestModels.AssignStudentTest;
 using Newtonsoft.Json;
 using System.Net;
 using System.Text;
@@ -64,7 +65,12 @@ namespace ItIsMe.Mobile.Helpers
 
         public static HttpStatusCode PostTest<TRequest>(TRequest model, string requestUrl) where TRequest : ITestRequest
         {
-            var data = new StringContent(model.GetString(), Encoding.UTF8, "application/json");
+            ResultContent result = new ResultContent
+            {
+                Result = JsonConvert.SerializeObject(model)
+            };
+
+            var data = new StringContent(JsonConvert.SerializeObject(result), Encoding.UTF8, "application/json");
 
             HttpResponseMessage httpResponse;
             using (HttpClient client = new HttpClient())
