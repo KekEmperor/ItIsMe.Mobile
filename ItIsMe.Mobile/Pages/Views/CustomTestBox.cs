@@ -41,6 +41,6 @@ public class CustomTestBox : ContentView
 
     private async void BoxTapped(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new CustomTestPage(_assignedTest.Test, _parentPage));
+        await Navigation.PushAsync(new CustomTestPage(_assignedTest.Test, _parentPage, _assignedTest.Id));
     }
 }

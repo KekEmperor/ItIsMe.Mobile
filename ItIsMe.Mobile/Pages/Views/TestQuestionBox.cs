@@ -5,11 +5,15 @@ namespace ItIsMe.Mobile;
 public class TestQuestionBox : ContentView
 {
     private readonly List<View> _optionViews = new List<View>();
+    private readonly List<string> _optionNames = new List<string>();
     private readonly string _type;
+    private readonly string _question;
 
     public TestQuestionBox(TestQuestion question)
     {
         _type = question.Type;
+        _question = question.Question;
+        _optionNames = question.Options;
 
         var content = new StackLayout
         {
@@ -23,7 +27,7 @@ public class TestQuestionBox : ContentView
             Padding = 5
         };
 
-        if (question.Type == "Open")
+        if (question.Type == "Open" || question.Type == "text")
         {
             var entry = new Entry();
 
@@ -32,7 +36,7 @@ public class TestQuestionBox : ContentView
             content.Add(entry);
             _optionViews.Add(entry);
         }
-        else if (question.Type == "Radiobutton")
+        else if (question.Type == "Radiobutton" || question.Type == "radio")
         {
             foreach (var option in question.Options)
             {
@@ -47,7 +51,7 @@ public class TestQuestionBox : ContentView
                 _optionViews.Add(radioButton);
             }
         }
-        else
+        else if (question.Type == "Checkbox" || question.Type == "checkbox")
         {
             foreach (var option in question.Options)
             {
@@ -76,7 +80,7 @@ public class TestQuestionBox : ContentView
 
     public bool DoesQuestionHaveAnswer()
     {
-        if (_type == "Open")
+        if (_type == "Open" || _type == "text")
         {
             if (string.IsNullOrEmpty(
                 ((Entry)_optionViews.First()).Text))
@@ -86,7 +90,7 @@ public class TestQuestionBox : ContentView
             }
             return true;
         }
-        else if (_type == "Radiobutton")
+        else if (_type == "Radiobutton" || _type == "radio")
         {
             if (_optionViews.Cast<RadioButton>().All(rb => !rb.IsChecked))
             {
@@ -95,7 +99,7 @@ public class TestQuestionBox : ContentView
             }
             return true;
         }
-        else
+        else if (_type == "Checkbox" || _type == "checkbox")
         {
             if (_optionViews.Cast<CheckBox>().All(cb => !cb.IsChecked))
             {
@@ -104,11 +108,52 @@ public class TestQuestionBox : ContentView
             }
             return true;
         }
+
+        return false;
     }
 
-    public string GetAnswerForQuestion()
+    public Answer GetAnswerForQuestion()
     {
-        throw new NotImplementedException();
+        var answer = new Answer();
+        answer.Question = _question;
+        answer.Answers = new List<string>();
+
+        if (_type == "Open" || _type == "text")
+        {
+            answer.Answers.Add(((Entry)_optionViews.First()).Text);
+
+            return answer;
+        }
+        else if (_type == "Checkbox" || _type == "checkbox")
+        {
+            var checkboxes = _optionViews.Cast<CheckBox>();
+
+            for (int i = 0; i < checkboxes.Count(); i++)
+            {
+                if (checkboxes.ElementAt(i).IsChecked)
+                {
+                    answer.Answers.Add(_optionNames[i]);
+                }
+            }
+
+            return answer;
+        }
+        else if (_type == "Radiobutton" || _type == "radio")
+        {
+            var radios = _optionViews.Cast<RadioButton>();
+
+            for (int i = 0; i < radios.Count(); i++)
+            {
+                if (radios.ElementAt(i).IsChecked)
+                {
+                    answer.Answers.Add(_optionNames[i]);
+                }
+            }
+
+            return answer;
+        }
+
+        return answer;
     }
 
     public string GetOptionForQuestion()

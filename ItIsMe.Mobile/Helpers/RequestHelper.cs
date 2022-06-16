@@ -75,6 +75,21 @@ namespace ItIsMe.Mobile.Helpers
             return httpResponse.StatusCode;
         }
 
+        public async static Task<HttpStatusCode> PostCustomTestResult(string answers, string assignedTestId)
+        {
+            var data = new StringContent(answers, Encoding.UTF8, "application/json");
+
+            HttpResponseMessage httpResponse;
+            using (HttpClient client = new HttpClient())
+            {
+                httpResponse = await client.PostAsync(URL + $"assignedStudentTests/{assignedTestId}", data);
+            }
+
+            var stringResponse = await httpResponse.Content.ReadAsStringAsync();
+
+            return httpResponse.StatusCode;
+        }
+
         public static async Task<HttpStatusCode> PostImage(FileResult fileResult, string testId)
         {
             using Stream sourceStream = await fileResult.OpenReadAsync();

@@ -3,6 +3,7 @@ using ItIsMe.Mobile.Helpers;
 using ItIsMe.Mobile.Pages.Interfaces;
 using ItIsMe.Mobile.RequestModels.AssignStudentTest;
 using Newtonsoft.Json;
+using System.Text;
 
 namespace ItIsMe.Mobile;
 
@@ -12,8 +13,9 @@ public partial class CustomTestPage : ContentPage
 
     private readonly List<TestQuestionBox> _questionBoxesList = new List<TestQuestionBox>();
     private readonly Test _test;
+    private readonly string _assignedTestId;
 
-    public CustomTestPage(Test test, IRefreshablePage parentPage = null)
+    public CustomTestPage(Test test, IRefreshablePage parentPage = null, string assignedTestId = null)
     {
         InitializeComponent();
 
@@ -22,6 +24,8 @@ public partial class CustomTestPage : ContentPage
         _parentPage = parentPage;
 
         _test = test;
+
+        _assignedTestId = assignedTestId;
 
         ScrollView parentScrollView = new ScrollView();
 
@@ -33,7 +37,7 @@ public partial class CustomTestPage : ContentPage
         parentScrollView.Content = questionsHolder;
 
         List<TestQuestion> questionsList =
-            JsonConvert.DeserializeObject<List<TestQuestion>>(test.ContentJson);
+            JsonConvert.DeserializeObject<TestContent>(test.ContentJson).Quiz;
 
         foreach (var question in questionsList)
         {
@@ -62,6 +66,8 @@ public partial class CustomTestPage : ContentPage
             return;
         }
 
+        var answers = new List<Answer>();
+
         if (_test.Name == "IT speciality test")
         {
             var result = new ItSpecialityTestRequest();
@@ -84,12 +90,26 @@ public partial class CustomTestPage : ContentPage
 
             DefaultTestsHelper.ItSpecialityTestAnswers = result;
         }
-
-        if (_parentPage != null)
+        else
         {
-            _parentPage.Refresh();
+            foreach (TestQuestionBox tb in _questionBoxesList)
+            {
+                answers.Add(tb.GetAnswerForQuestion());
+            }
         }
 
-        await Navigation.PopAsync();
+        string testAnswers = JsonConvert.SerializeObject(answers);
+
+        var response = await RequestHelper.PostCustomTestResult(testAnswers, _assignedTestId);
+
+        if (response == System.Net.HttpStatusCode.OK)
+        {
+            if (_parentPage != null)
+            {
+                _parentPage.Refresh();
+            }
+
+            await Navigation.PopAsync();
+        }
     }
 }

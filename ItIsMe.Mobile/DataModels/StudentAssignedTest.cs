@@ -8,6 +8,8 @@ namespace ItIsMe.Mobile.DataModels
 {
     public class StudentAssignedTest
     {
+        public string Id { get; set; }
+
         public Test Test { get; set; }
 
         public DateTime Date { get; set; }
